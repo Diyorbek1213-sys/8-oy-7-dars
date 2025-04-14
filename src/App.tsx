@@ -2,9 +2,10 @@ import { Route, Routes } from "react-router-dom"
 import Home from './components/Home.js'
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { Product } from "./types/types.js"
 
 const App = () => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<Product[]>([])
 
   useEffect(() => {
     const getData = async () => {
