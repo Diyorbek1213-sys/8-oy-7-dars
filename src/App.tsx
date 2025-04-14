@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom"
+import Home from './components/Home.js'
+import { useEffect, useState } from "react"
+import axios from "axios"
 
-function App() {
+const App = () => {
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios('https://fakestoreapi.com/products')
+        if (res.status === 200) {
+          setData(res.data)
+          console.log(res.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    getData()
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path="/" element={<Home data={data} />} />
+      </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
